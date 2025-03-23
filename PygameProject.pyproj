@@ -22,13 +22,19 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="game\game.py" />
-    <Compile Include="game\player.py" />
+    <Compile Include="game\player\player.py" />
+    <Compile Include="game\player\__init__.py" />
+    <Compile Include="game\sceneManager.py" />
+    <Compile Include="game\scenes\__init__.py" />
     <Compile Include="game\settings.py" />
+    <Compile Include="game\player\settingsPlayer.py" />
     <Compile Include="game\__init__.py" />
     <Compile Include="PygameProject.py" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="game\" />
+    <Folder Include="game\player\" />
+    <Folder Include="game\scenes\" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets" />
   <!-- Uncomment the CoreCompile target to enable the Build command in

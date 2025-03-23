@@ -1,6 +1,6 @@
 import pygame
 from .settings import WIDTH, HEIGHT, FPS
-from .player import Player
+from game.player import Player
 
 class Game:
     def __init__(self):
