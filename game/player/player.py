@@ -1,5 +1,5 @@
 import pygame
-from .settingsPlayer import playerStatus
+from .settings_player import playerStatus
 
 class Player:
     def __init__(self, x, y):

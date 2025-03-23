@@ -24,10 +24,13 @@
     <Compile Include="game\game.py" />
     <Compile Include="game\player\player.py" />
     <Compile Include="game\player\__init__.py" />
-    <Compile Include="game\sceneManager.py" />
+    <Compile Include="game\scene_manager.py" />
+    <Compile Include="game\scenes\base_scene.py" />
+    <Compile Include="game\scenes\game_play.py" />
+    <Compile Include="game\scenes\menu.py" />
     <Compile Include="game\scenes\__init__.py" />
     <Compile Include="game\settings.py" />
-    <Compile Include="game\player\settingsPlayer.py" />
+    <Compile Include="game\player\settings_player.py" />
     <Compile Include="game\__init__.py" />
     <Compile Include="PygameProject.py" />
   </ItemGroup>
