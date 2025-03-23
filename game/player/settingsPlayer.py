@@ -1,0 +1,4 @@
+
+playerStatus = {
+    "speed": 5,
+}

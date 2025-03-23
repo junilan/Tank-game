@@ -1,10 +1,11 @@
 import pygame
+from .settingsPlayer import playerStatus
 
 class Player:
     def __init__(self, x, y):
         self.rect = pygame.Rect(x, y, 50, 50)  
         self.color = (0, 255, 0)
-        self.speed = 5
+        self.speed = playerStatus["speed"]
 
     def update(self):
         keys = pygame.key.get_pressed()
