@@ -1,9 +1,10 @@
-#from game import Game
+from game import Game
 
-#if __name__ == "__main__":
-#    game = Game()
-#    game.run()
+if __name__ == "__main__":
+    game = Game()
+    game.run()
 
+'''
 import pygame
 from game.scene_manager import SceneManager
 from game.scenes.menu import MenuScene
@@ -27,3 +28,4 @@ manager.change_scene("menu")
 manager.run()
 
 pygame.quit()
+'''
