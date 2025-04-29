@@ -1,4 +1,4 @@
 
 playerStatus = {
-    "speed": 5,
+    "speed": 200,
 }

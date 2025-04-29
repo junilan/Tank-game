@@ -4,13 +4,14 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>8ae71e36-7b23-4172-bb16-7ceeaf119dd9</ProjectGuid>
     <ProjectHome>.</ProjectHome>
-    <StartupFile>PygameProject.py</StartupFile>
+    <StartupFile>game\src\game.py</StartupFile>
     <SearchPath>
     </SearchPath>
-    <WorkingDirectory>.</WorkingDirectory>
+    <WorkingDirectory>$(SolutionDir)</WorkingDirectory>
     <OutputPath>.</OutputPath>
     <Name>PygameProject</Name>
     <RootNamespace>PygameProject</RootNamespace>
+    <IsWindowsApplication>False</IsWindowsApplication>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
     <DebugSymbols>true</DebugSymbols>
@@ -21,23 +22,30 @@
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="game\game.py" />
-    <Compile Include="game\player\player.py" />
-    <Compile Include="game\player\__init__.py" />
-    <Compile Include="game\scene_manager.py" />
+    <Compile Include="game\src\components\__init__.py" />
+    <Compile Include="game\src\game.py" />
+    <Compile Include="game\assets\image\__init__.py" />
+    <Compile Include="game\src\entities\player.py" />
+    <Compile Include="game\src\components\tank_body.py" />
+    <Compile Include="game\src\components\turret.py" />
+    <Compile Include="game\src\entities\__init__.py" />
+    <Compile Include="game\src\scene_manager.py" />
     <Compile Include="game\scenes\base_scene.py" />
     <Compile Include="game\scenes\game_play.py" />
     <Compile Include="game\scenes\menu.py" />
     <Compile Include="game\scenes\__init__.py" />
-    <Compile Include="game\settings.py" />
-    <Compile Include="game\player\settings_player.py" />
-    <Compile Include="game\__init__.py" />
-    <Compile Include="PygameProject.py" />
+    <Compile Include="config.py" />
+    <Compile Include="game\src\entities\character_stats.py" />
+    <Compile Include="game\src\__init__.py" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="game\" />
-    <Folder Include="game\player\" />
+    <Folder Include="game\assets\image\" />
+    <Folder Include="game\assets\" />
+    <Folder Include="game\src\" />
     <Folder Include="game\scenes\" />
+    <Folder Include="game\src\entities\" />
+    <Folder Include="game\src\components\" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets" />
   <!-- Uncomment the CoreCompile target to enable the Build command in
