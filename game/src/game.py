@@ -1,7 +1,7 @@
 import pygame
 import math
 import config
-from entities import Player
+from src.entities import Player
 
 class Game:
     def __init__(self):
@@ -11,13 +11,7 @@ class Game:
         self.clock = pygame.time.Clock()
         self.running = True
 
-        image_add = {
-            "tankBody": "game/assets/image/tankBody.png",
-            "turretBody": "game/assets/image/turretBody.png",
-            "cannonCover": "game/assets/image/cannonCover.png",
-            "cannonBody": "game/assets/image/cannon.png",
-        }
-        self.player = Player(config.WIDTH/2, config.HEIGHT-100, image_add)  
+        self.player = Player(config.WIDTH/2, config.HEIGHT-100)  
 
 
 
