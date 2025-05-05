@@ -7,6 +7,7 @@ def load_image(path):
     """
     Load an image from the specified path and convert it to a format suitable for display.
     """
+    global image_cache
     if path not in image_cache:
         try:
             image = pygame.image.load(path)

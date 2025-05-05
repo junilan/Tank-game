@@ -25,6 +25,7 @@ class Player:
         self.speed = 0
         self.tank_speed = playerStatus["speed"]
 
+
     def update(self, dt):
 
         keys = pygame.key.get_pressed()
@@ -40,7 +41,17 @@ class Player:
             self.tank_body.move(-self.tank_speed)
         else: # Stop the tank
             self.tank_body.move(0)
+
+        mouse_click = pygame.mouse.get_pressed()
+
+        if mouse_click[0]:
+            # Fire the main cannon
+            self.turret.fire_shell(self.tank_body.x, self.tank_body.y)
             
+        if keys[pygame.K_SPACE]:
+            if self.turret.is_fired_shell:
+                self.turret.is_fired_shell = False
+
         self.tank_body.update(dt)
 
         # Update turret position
@@ -50,3 +61,5 @@ class Player:
     def draw(self, screen):
         self.tank_body.draw(screen)
         self.turret.draw(screen)
+
+            
