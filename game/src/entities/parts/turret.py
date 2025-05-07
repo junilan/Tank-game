@@ -2,6 +2,7 @@ import pygame
 from src.entities.character_stats import playerStatus
 from src.entities.parts.projectile.shell import Shell
 from src.entities.parts.projectile.bullet import Bullet
+from src.utils import calculate_angle_vec_to_degrees_rotate
 
 
 class Turret(pygame.sprite.Sprite):
@@ -19,9 +20,8 @@ class Turret(pygame.sprite.Sprite):
         self.rotaion_speed = playerStatus["rotation_speed"]
         self.direction = pygame.math.Vector2(playerStatus["init_direction"])
 
-        self.is_fired_shell = False
-        self.shell = Shell(x, y, self.direction)
-        self.shell_group = pygame.sprite.Group()
+        self.cannon_pos = (image_files["cannon_cover"].get_height() / 2) / 5
+        self.shell_fired_pos = (image_files["cannon_body"].get_height() / 2) + self.cannon_pos
 
     def update(self, x, y):
         self.x = x
@@ -31,41 +31,32 @@ class Turret(pygame.sprite.Sprite):
         mouse_pos_vector = pygame.Vector2(mouse_x, mouse_y)
         self.direction = mouse_pos_vector - current_tank_body_pos
 
-        offset_cannonBody = pygame.Vector2(0, -10)  # Offset position to relocate cannon body's pivot point
-
         if self.direction.length() > 0: self.direction = self.direction.normalize()
 
-        turret_angle = self.direction.angle_to(pygame.Vector2(0, 1)) - 180.0  # Angle in degrees
+        turret_angle = calculate_angle_vec_to_degrees_rotate(self.direction)  # Angle in degrees
         current_center_turret_pos = current_tank_body_pos
+
 
         self.rotated_turretBody_image = pygame.transform.rotate(self.image_files["turret_body"], turret_angle)
         self.rotated_cannonCover_image = pygame.transform.rotate(self.image_files["cannon_cover"], turret_angle)
         self.rotated_cannonBody_image = pygame.transform.rotate(self.image_files["cannon_body"], turret_angle)
+
+        offset_cannonBody = pygame.Vector2(0, -self.cannon_pos)  # Offset position to relocate cannon body's pivot point
         rotated_offset_cannonBody = offset_cannonBody.rotate(-turret_angle)# Offset rotating for cannon body's pivot point
         
         self.rotated_rect_turretBody = self.rotated_turretBody_image.get_rect(center = current_center_turret_pos)
         self.rotated_rect_cannonCover = self.rotated_cannonCover_image.get_rect(center = current_center_turret_pos)
         self.rotated_rect_cannonBody = self.rotated_cannonBody_image.get_rect(center = current_center_turret_pos + rotated_offset_cannonBody)
         
-        self.shell_group.update()
-
     def draw(self, screen):
         screen.blit(self.rotated_turretBody_image, self.rotated_rect_turretBody)
         screen.blit(self.rotated_cannonBody_image, self.rotated_rect_cannonBody)
         screen.blit(self.rotated_cannonCover_image, self.rotated_rect_cannonCover)
         
         pygame.draw.circle(screen, (0, 255, 0), (self.x, self.y), 5, 0)
-        self.shell_group.draw(screen)
+
+    def cannon_moving(self):
+        pass
+
             
 
-    def fire_shell(self, x, y):
-        # Implement firing logic for the main cannon here
-        if self.is_fired_shell == False:
-            self.is_fired_shell = True
-            shell = Shell(self.x, self.y, self.direction)
-            self.shell_group.add(shell)
-
-    def fire_bullet(self):
-        # Implement firing logic for the sub machine gun here
-
-        pass

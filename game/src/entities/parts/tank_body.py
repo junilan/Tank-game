@@ -1,38 +1,45 @@
 import pygame
+from src.utils import calculate_angle_vec_to_degrees_rotate, movement_vector
 from src.entities.character_stats import playerStatus
 
-class TankBody:
+class TankBody(pygame.sprite.Sprite):
     def __init__(self, x, y, image_file):
-
-        self.x = x
-        self.y = y
-
-        self.image_files = {
-            "tank_body": image_file["tank_body"],
-        }
-
-        self.rect = self.image_files["tank_body"].get_rect() 
-        self.rect.center = (x, y)
+        super().__init__()
 
         self.direction = pygame.math.Vector2(playerStatus["init_direction"])
         self.speed = 0
         self.rotaion_speed = playerStatus["rotation_speed"]
         self.tank_speed = playerStatus["speed"]
 
+        self.image_files = {
+            "tank_body": image_file["tank_body"],
+        }
+        
+        current_angle = calculate_angle_vec_to_degrees_rotate(self.direction)  # Angle in degrees
+        
+
+        # 2. Rotate the original image
+        self.rotated_body_image = pygame.transform.rotate(self.image_files["tank_body"], current_angle)
+
+        # 3. Get the rect of the rotated image and position it
+        self.rect = self.rotated_body_image.get_rect(center = (x, y))
+        self.bullet_fired_pos_x = (self.image_files["tank_body"].get_width() / 2) - ((self.image_files["tank_body"].get_width() / 2) / 1.3)
+        self.bullet_fired_pos_y = (self.image_files["tank_body"].get_height() / 2) - ((self.image_files["tank_body"].get_height() / 2) / 3)
+
     def update(self, dt):
         self.dt = dt
         current_center_pos = pygame.Vector2(self.rect.center)
-        current_angle = self.direction.angle_to(pygame.Vector2(0, 1))  # Angle in degrees
+        current_angle = calculate_angle_vec_to_degrees_rotate(self.direction)  # Angle in degrees
 
         # 2. Rotate the original image
-        self.rotated_body_image = pygame.transform.rotate(self.image_files["tank_body"], -current_angle)
+        self.rotated_body_image = pygame.transform.rotate(self.image_files["tank_body"], current_angle)
 
         # 3. Get the rect of the rotated image and position it
-        self.rotated_rect = self.rotated_body_image.get_rect(center = current_center_pos)
+        self.rect = self.rotated_body_image.get_rect(center = current_center_pos)
 
     def draw(self, screen):
 
-        screen.blit(self.rotated_body_image, self.rotated_rect)
+        screen.blit(self.rotated_body_image, self.rect)
 
         #pygame.draw.circle(screen, (0, 255, 0), current_center_pos, 5, 0)
         #pygame.draw.circle(screen, (255, 255, 0), current_center_turret_pos, 5, 0)
@@ -44,7 +51,4 @@ class TankBody:
         self.speed = speed
 
         if self.speed != 0:
-            movement = self.direction * self.speed * self.dt
-            self.x += movement.x
-            self.y -= movement.y
-            self.rect.center = (int(self.x), int(self.y))
+            self.rect.center = movement_vector(self.rect.centerx, self.rect.centery, self.direction, self.speed, self.dt)
