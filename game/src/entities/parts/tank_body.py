@@ -1,15 +1,15 @@
 import pygame
 from src.utils import calculate_angle_vec_to_degrees_rotate, movement_vector
-from src.entities.character_stats import playerStatus
+from src.entities.character_stats import PLAYERSTATUS
 
 class TankBody(pygame.sprite.Sprite):
     def __init__(self, x, y, image_file):
         super().__init__()
 
-        self.direction = pygame.math.Vector2(playerStatus["init_direction"])
+        self.direction = pygame.math.Vector2(PLAYERSTATUS["init_direction"])
         self.speed = 0
-        self.rotaion_speed = playerStatus["rotation_speed"]
-        self.tank_speed = playerStatus["speed"]
+        self.rotaion_speed = PLAYERSTATUS["rotation_speed"]
+        self.tank_speed = PLAYERSTATUS["speed"]
 
         self.image_files = {
             "tank_body": image_file["tank_body"],

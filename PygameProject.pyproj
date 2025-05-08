@@ -23,6 +23,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="game\src\entities\enemy_dummy.py" />
+    <Compile Include="game\src\entities\enemy_tank.py" />
     <Compile Include="game\src\entities\parts\projectile\bullet.py" />
     <Compile Include="game\src\entities\parts\projectile\projectile.py" />
     <Compile Include="game\src\entities\parts\projectile\shell.py" />

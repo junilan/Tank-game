@@ -1,5 +1,5 @@
 import pygame
-from src.entities.character_stats import playerStatus
+from src.entities.character_stats import PLAYERSTATUS
 from src.entities.parts.projectile.shell import Shell
 from src.entities.parts.projectile.bullet import Bullet
 from src.utils import calculate_angle_vec_to_degrees_rotate
@@ -17,8 +17,8 @@ class Turret(pygame.sprite.Sprite):
             "cannon_body": image_files["cannon_body"],
         }
         
-        self.rotaion_speed = playerStatus["rotation_speed"]
-        self.direction = pygame.math.Vector2(playerStatus["init_direction"])
+        self.rotaion_speed = PLAYERSTATUS["rotation_speed"]
+        self.direction = pygame.math.Vector2(PLAYERSTATUS["init_direction"])
 
         self.cannon_pos = (image_files["cannon_cover"].get_height() / 2) / 5
         self.shell_fired_pos = (image_files["cannon_body"].get_height() / 2) + self.cannon_pos
@@ -26,15 +26,13 @@ class Turret(pygame.sprite.Sprite):
     def update(self, x, y):
         self.x = x
         self.y = y
-        current_tank_body_pos = pygame.Vector2(self.x, self.y)
-        mouse_x, mouse_y = pygame.mouse.get_pos()
-        mouse_pos_vector = pygame.Vector2(mouse_x, mouse_y)
-        self.direction = mouse_pos_vector - current_tank_body_pos
+        current_turret_pos = pygame.Vector2(self.x, self.y)
+        self.direction = self.aim_pos_vector - current_turret_pos
 
         if self.direction.length() > 0: self.direction = self.direction.normalize()
 
         turret_angle = calculate_angle_vec_to_degrees_rotate(self.direction)  # Angle in degrees
-        current_center_turret_pos = current_tank_body_pos
+        current_center_turret_pos = current_turret_pos
 
 
         self.rotated_turretBody_image = pygame.transform.rotate(self.image_files["turret_body"], turret_angle)
@@ -54,6 +52,9 @@ class Turret(pygame.sprite.Sprite):
         screen.blit(self.rotated_cannonCover_image, self.rotated_rect_cannonCover)
         
         pygame.draw.circle(screen, (0, 255, 0), (self.x, self.y), 5, 0)
+
+    def rotate(self, x, y):
+        self.aim_pos_vector = pygame.Vector2(x, y)
 
     def cannon_moving(self):
         pass

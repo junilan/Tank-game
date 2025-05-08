@@ -2,13 +2,13 @@ import pygame
 from .projectile import Projectile
 import config
 from src.utils import load_image
-from src.entities.character_stats import TankStatus
+from src.entities.character_stats import TANKSTATUS
 
 class Shell(Projectile):
     def __init__(self, x, y, direction):
         super().__init__(x, y, direction)
         projectile_name  = "shell"
-        self.speed = TankStatus[projectile_name + "_speed"]
+        self.speed = TANKSTATUS[projectile_name + "_speed"]
 
         self.loaded_image = load_image(config.IMAGEFILE_PATH + projectile_name + ".png")
         

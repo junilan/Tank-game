@@ -1,5 +1,5 @@
 import pygame
-from src.entities.character_stats import playerStatus
+from src.entities.character_stats import PLAYERSTATUS
 
 class TankBody:
     def __init__(self, x, y, image_file):
@@ -17,10 +17,10 @@ class TankBody:
         self.rect = image_file["tank_body"].get_rect() 
         self.rect.center = (x, y)
 
-        self.direction = pygame.math.Vector2(playerStatus["init_direction"])
+        self.direction = pygame.math.Vector2(PLAYERSTATUS["init_direction"])
         self.speed = 0
-        self.rotaion_speed = playerStatus["rotation_speed"]
-        self.tank_speed = playerStatus["speed"]
+        self.rotaion_speed = PLAYERSTATUS["rotation_speed"]
+        self.tank_speed = PLAYERSTATUS["speed"]
 
     def update(self, dt):
         keys = pygame.key.get_pressed()

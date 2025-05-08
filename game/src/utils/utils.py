@@ -1,5 +1,6 @@
 import pygame
 import config
+import random
 
 image_cache = {}
 
