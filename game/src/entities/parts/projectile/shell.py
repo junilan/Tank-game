@@ -10,8 +10,10 @@ class Shell(Projectile):
         projectile_name  = "shell"
         self.speed = TANKSTATUS[projectile_name + "_speed"]
 
-        self.loaded_image = load_image(config.IMAGEFILE_PATH + projectile_name + ".png")
+        #self.loaded_image = load_image(config.IMAGEFILE_PATH + projectile_name + ".png")
         
         self.image = self.set_image(projectile_name)
         
         self.rect = self.image.get_rect(center = (x, y))
+        self.rect.inflate(-100, -50)
+        #self.mask = pygame.mask.from_surface(self.image)

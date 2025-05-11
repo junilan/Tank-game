@@ -1,9 +1,7 @@
 import pygame
+import math
 from src.entities.character_stats import PLAYERSTATUS
-from src.entities.parts.projectile.shell import Shell
-from src.entities.parts.projectile.bullet import Bullet
 from src.utils import calculate_angle_vec_to_degrees_rotate
-
 
 class Turret(pygame.sprite.Sprite):
     def __init__(self, x, y, image_files):
@@ -11,53 +9,49 @@ class Turret(pygame.sprite.Sprite):
         self.x = x
         self.y = y
 
-        self.image_files = {
-            "turret_body": image_files["turret_body"],
-            "cannon_cover": image_files["cannon_cover"],
-            "cannon_body": image_files["cannon_body"],
-        }
-        
-        self.rotaion_speed = PLAYERSTATUS["rotation_speed"]
-        self.direction = pygame.math.Vector2(PLAYERSTATUS["init_direction"])
-
         self.cannon_pos = (image_files["cannon_cover"].get_height() / 2) / 5
         self.shell_fired_pos = (image_files["cannon_body"].get_height() / 2) + self.cannon_pos
+
+        self.original_image = self.combine_images(image_files)
+
+        self.image = self.original_image.copy()
+        self.rect = self.image.get_rect(center=(x, y))
+        self.direction = pygame.math.Vector2(PLAYERSTATUS["init_direction"])
+        self.angle = 0
+
+    def combine_images(self, image_files):
+
+        turret_body_image = image_files["turret_body"]
+        cannon_cover_image = image_files["cannon_cover"]
+        cannon_body_image = image_files["cannon_body"]
+
+        width = max(turret_body_image.get_width(), cannon_cover_image.get_width(), cannon_body_image.get_width())
+        height = turret_body_image.get_height() + max(cannon_cover_image.get_height(), cannon_body_image.get_height())
+
+        combined_image = pygame.Surface((width, height), pygame.SRCALPHA)
+
+        combined_image.blit(turret_body_image, (0, turret_body_image.get_height()/2))
+        combined_image.blit(cannon_body_image, (0, cannon_body_image.get_height()/2 - self.cannon_pos))
+        combined_image.blit(cannon_cover_image, (0, cannon_cover_image.get_height()/2))
+
+        return combined_image
 
     def update(self, x, y):
         self.x = x
         self.y = y
-        current_turret_pos = pygame.Vector2(self.x, self.y)
-        self.direction = self.aim_pos_vector - current_turret_pos
+        self.rect.center = (x, y) 
+        self.direction = self.aim_pos_vector - pygame.Vector2(self.x, self.y)
+        if self.direction.length() > 0:
+            self.direction.normalize_ip()
 
-        if self.direction.length() > 0: self.direction = self.direction.normalize()
+        self.angle = math.degrees(math.atan2(-self.direction.y, self.direction.x)) - 90
 
-        turret_angle = calculate_angle_vec_to_degrees_rotate(self.direction)  # Angle in degrees
-        current_center_turret_pos = current_turret_pos
+        self.image = pygame.transform.rotate(self.original_image, self.angle)
+        self.rect = self.image.get_rect(center=(self.x, self.y)) 
 
-
-        self.rotated_turretBody_image = pygame.transform.rotate(self.image_files["turret_body"], turret_angle)
-        self.rotated_cannonCover_image = pygame.transform.rotate(self.image_files["cannon_cover"], turret_angle)
-        self.rotated_cannonBody_image = pygame.transform.rotate(self.image_files["cannon_body"], turret_angle)
-
-        offset_cannonBody = pygame.Vector2(0, -self.cannon_pos)  # Offset position to relocate cannon body's pivot point
-        rotated_offset_cannonBody = offset_cannonBody.rotate(-turret_angle)# Offset rotating for cannon body's pivot point
-        
-        self.rotated_rect_turretBody = self.rotated_turretBody_image.get_rect(center = current_center_turret_pos)
-        self.rotated_rect_cannonCover = self.rotated_cannonCover_image.get_rect(center = current_center_turret_pos)
-        self.rotated_rect_cannonBody = self.rotated_cannonBody_image.get_rect(center = current_center_turret_pos + rotated_offset_cannonBody)
-        
     def draw(self, screen):
-        screen.blit(self.rotated_turretBody_image, self.rotated_rect_turretBody)
-        screen.blit(self.rotated_cannonBody_image, self.rotated_rect_cannonBody)
-        screen.blit(self.rotated_cannonCover_image, self.rotated_rect_cannonCover)
-        
+        screen.blit(self.image, self.rect)
         pygame.draw.circle(screen, (0, 255, 0), (self.x, self.y), 5, 0)
 
     def rotate(self, x, y):
         self.aim_pos_vector = pygame.Vector2(x, y)
-
-    def cannon_moving(self):
-        pass
-
-            
-

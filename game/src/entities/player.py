@@ -27,34 +27,35 @@ class Player(TankUnit):
         self.cooldown_cnt_bullet = 0
 
     def update(self, dt):
-        keys = pygame.key.get_pressed()
+        if self.is_alive:
+            keys = pygame.key.get_pressed()
 
-        if keys[pygame.K_a]: # Rotate the tank left
-            self.tank_body.rotate(-self.rotaion_speed)
-        if keys[pygame.K_d]: # Rotate the tank right
-            self.tank_body.rotate(+self.rotaion_speed)
+            if keys[pygame.K_a]: # Rotate the tank left
+                self.tank_body.rotate(-self.rotaion_speed)
+            if keys[pygame.K_d]: # Rotate the tank right
+                self.tank_body.rotate(+self.rotaion_speed)
 
-        if keys[pygame.K_w]: # Move the tank forward
-            self.tank_body.move(self.tank_speed)
-        elif keys[pygame.K_s]: # Move the tank backward
-            self.tank_body.move(-self.tank_speed)
-        else: # Stop the tank
-            self.tank_body.move(0)
+            if keys[pygame.K_w]: # Move the tank forward
+                self.tank_body.move(self.tank_speed)
+            elif keys[pygame.K_s]: # Move the tank backward
+                self.tank_body.move(-self.tank_speed)
+            else: # Stop the tank
+                self.tank_body.move(0)
 
-        mouse_click = pygame.mouse.get_pressed()
+            mouse_click = pygame.mouse.get_pressed()
 
-        if mouse_click[0]:
-            # Fire the main cannon
-            self.fire_shell()
-        if mouse_click[2]:
-            # Fire the main cannon
-            self.fire_bullet()
+            if mouse_click[0]:
+                # Fire the main cannon
+                self.fire_shell()
+            if mouse_click[2]:
+                # Fire the main cannon
+                self.fire_bullet()
 
-        mouse_x, mouse_y = pygame.mouse.get_pos()
-        self.turret.rotate(mouse_x, mouse_y)
+            mouse_x, mouse_y = pygame.mouse.get_pos()
+            self.turret.rotate(mouse_x, mouse_y)
 
-        self.is_fired_shell, self.cooldown_cnt_shell = self.reloading(self.is_fired_shell, self.cooldown_cnt_shell, self.cannon_attack_speed, dt)
-        self.is_fired_bullet, self.cooldown_cnt_bullet = self.reloading(self.is_fired_bullet, self.cooldown_cnt_bullet, self.machine_gun_attack_speed, dt)
+            self.is_fired_shell, self.cooldown_cnt_shell = self.reloading(self.is_fired_shell, self.cooldown_cnt_shell, self.cannon_attack_speed, dt)
+            self.is_fired_bullet, self.cooldown_cnt_bullet = self.reloading(self.is_fired_bullet, self.cooldown_cnt_bullet, self.machine_gun_attack_speed, dt)
 
-        super().update(dt)
+            super().update(dt)
             

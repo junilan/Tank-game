@@ -15,6 +15,12 @@ class Game:
         self.running = True
 
         self.player = Player(config.GAME_WINDOW_WIDTH/2, config.GAME_WINDOW_HEIGHT-100)  
+        self.player_group = pygame.sprite.Group(self.player)
+        self.player_sprite_group = pygame.sprite.Group(self.player.tank_body, self.player.turret)
+        
+        self.enemy_tank = EnemyTank(config.GAME_WINDOW_WIDTH/2, 100)
+        self.enemy_tank_group = pygame.sprite.Group(self.enemy_tank)
+        self.enemy_tank_sprite_group = pygame.sprite.Group(self.enemy_tank.tank_body, self.enemy_tank.turret)
 
         self.enemy_dummy_group = pygame.sprite.Group() 
         for _ in range(10):
@@ -26,8 +32,6 @@ class Game:
                     self.enemy_dummy_group.add(enemy)
                     break
         
-        self.enemy_tank = EnemyTank(config.GAME_WINDOW_WIDTH/2, 100)
-        self.enemy_tank_group = pygame.sprite.Group(self.enemy_tank)
 
 
 
@@ -45,7 +49,8 @@ class Game:
                 self.running = False
 
     def update(self):
-        self.player.update(self.dt)
+        #self.player.update(self.dt)
+        self.player_group.update(self.dt)
         self.enemy_dummy_group.update(self.dt)
         self.enemy_tank_group.update(self.dt, self.player.rect.centerx, self.player.rect.centery)
 
@@ -53,13 +58,16 @@ class Game:
         for enemy in collisions_by_player:
             print(f"Player collided with enemy: {enemy}")
             enemy.take_damage(100)  # Example damage value
+        collisions_by_enemy = pygame.sprite.spritecollide(self.player, self.enemy_tank.shell_group, True)
+        for shell in collisions_by_enemy:
+            shell.kill()
+            self.player.take_damage(50)
             
         
         collisions = pygame.sprite.groupcollide(self.player.Bullet_group, self.enemy_dummy_group, True, True)
         for bullet, enemies in collisions.items():
             for enemy in enemies:
                 enemy.take_damage(10)
-
         collisions = pygame.sprite.groupcollide(self.player.shell_group, self.enemy_dummy_group, True, True)
         for shell, enemies in collisions.items():
             for enemy in enemies:
@@ -68,18 +76,23 @@ class Game:
         collisions = pygame.sprite.spritecollide(self.enemy_tank, self.player.Bullet_group, True)
         for bullet in collisions:
             bullet.kill()
-
         collisions = pygame.sprite.spritecollide(self.enemy_tank, self.player.shell_group, True)
         for shell in collisions:
             shell.kill()
             self.enemy_tank.take_damage(50)
+            
 
     def draw(self):
         self.screen.fill((60, 60, 0)) 
 
-        self.player.draw(self.screen)  
+        #self.player.draw(self.screen)  
+        self.player_sprite_group.draw(self.screen)
+        self.player.Bullet_group.draw(self.screen)
+        self.player.shell_group.draw(self.screen)
         self.enemy_dummy_group.draw(self.screen)
-        self.enemy_tank.draw(self.screen)
+        self.enemy_tank_sprite_group.draw(self.screen)
+        self.enemy_tank.shell_group.draw(self.screen)
+        self.enemy_tank.Bullet_group.draw(self.screen)
         
         pygame.display.flip()
 

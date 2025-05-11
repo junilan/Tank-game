@@ -8,6 +8,7 @@ class Unit(pygame.sprite.Sprite):
         self.speed = 0
         self.tank_speed = 0
         self.health = 100
+        self.is_alive = True
 
     def update(self, dt):
         pass
@@ -20,3 +21,6 @@ class Unit(pygame.sprite.Sprite):
         print(f"health: {self.health}")
         if self.health <= 0:
             self.kill()
+            self.is_alive = False
+
+            

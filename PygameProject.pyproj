@@ -27,7 +27,6 @@
     <Compile Include="game\src\entities\parts\projectile\bullet.py" />
     <Compile Include="game\src\entities\parts\projectile\projectile.py" />
     <Compile Include="game\src\entities\parts\projectile\shell.py" />
-    <Compile Include="game\src\entities\parts\projectile\shooting_manager.py" />
     <Compile Include="game\src\entities\parts\projectile\__init__.py" />
     <Compile Include="game\src\entities\parts\tank_body_backup.py" />
     <Compile Include="game\src\entities\parts\__init__.py" />

@@ -17,28 +17,29 @@ class TankUnit(Unit):
         self.Bullet_group = pygame.sprite.Group()
 
     def update(self, dt):
-        self.tank_body.update(dt)
-        self.rect = self.tank_body.rect
+        if self.is_alive:
+            self.tank_body.update(dt)
+            self.rect = self.tank_body.rect
 
-        # Update turret position
-        self.turret.update(self.tank_body.rect.centerx, self.tank_body.rect.centery)
+            # Update turret position
+            self.turret.update(self.tank_body.rect.centerx, self.tank_body.rect.centery)
 
-        self.shell_group.update(dt)
-        self.Bullet_group.update(dt)
+            self.shell_group.update(dt)
+            self.Bullet_group.update(dt)
 
         
 
 
     def draw(self, screen):
-        self.tank_body.draw(screen)
-        self.turret.draw(screen)
-        self.shell_group.draw(screen)
-        self.Bullet_group.draw(screen)
+        pass
 
     def set_attributes(self, tank_body_image_file, turret_image_files, STATUS, x, y):
 
         self.tank_body = TankBody(x, y, tank_body_image_file)
         self.turret = Turret(x, y, turret_image_files)
+        self.tank_body_group = pygame.sprite.GroupSingle(self.tank_body)
+        self.turret_group = pygame.sprite.GroupSingle(self.turret)
+        self.image = pygame.Surface((0, 0), pygame.SRCALPHA)
         self.rect = self.tank_body.rect
 
         self.rotaion_speed = STATUS["rotation_speed"]
@@ -83,8 +84,11 @@ class TankUnit(Unit):
         self.health -= damage
         print(f"health: {self.health}")
         if self.health <= 0:
+            self.is_alive = False
             print("killed!")
             self.kill()
             self.tank_body.kill()
             self.turret.kill()
+            self.Bullet_group.empty()
+            self.shell_group.empty()
             

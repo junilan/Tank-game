@@ -1,4 +1,4 @@
-
+# This file contains the stats for the player and enemy tanks.
 PLAYERSTATUS = {
     "speed": 200,
     "rotation_speed": 2,

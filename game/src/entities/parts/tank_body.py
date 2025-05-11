@@ -20,7 +20,8 @@ class TankBody(pygame.sprite.Sprite):
 
         # 2. Rotate the original image
         self.rotated_body_image = pygame.transform.rotate(self.image_files["tank_body"], current_angle)
-
+        
+        self.image = self.rotated_body_image
         # 3. Get the rect of the rotated image and position it
         self.rect = self.rotated_body_image.get_rect(center = (x, y))
         self.bullet_fired_pos_x = (self.image_files["tank_body"].get_width() / 2) - ((self.image_files["tank_body"].get_width() / 2) / 1.3)
@@ -33,21 +34,16 @@ class TankBody(pygame.sprite.Sprite):
 
         # 2. Rotate the original image
         self.rotated_body_image = pygame.transform.rotate(self.image_files["tank_body"], current_angle)
-
+        
+        self.image = self.rotated_body_image
         # 3. Get the rect of the rotated image and position it
         self.rect = self.rotated_body_image.get_rect(center = current_center_pos)
-
-    def draw(self, screen):
-
-        screen.blit(self.rotated_body_image, self.rect)
-
-        #pygame.draw.circle(screen, (0, 255, 0), current_center_pos, 5, 0)
-        #pygame.draw.circle(screen, (255, 255, 0), current_center_turret_pos, 5, 0)
 
     def rotate(self, angle_degrees):
         self.direction = self.direction.rotate(angle_degrees)
 
     def move(self, speed):
+        '''Move the tank body in the direction it is facing.'''
         self.speed = speed
 
         if self.speed != 0:
