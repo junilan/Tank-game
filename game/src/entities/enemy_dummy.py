@@ -7,6 +7,7 @@ class EnemyDummy(Unit):
         self.image = pygame.Surface((50, 50)) 
         self.image.fill((255, 0, 0))  
         self.rect = self.image.get_rect()
+        self.mask = pygame.mask.from_surface(self.image)
 
     def update(self, dt):
         pass

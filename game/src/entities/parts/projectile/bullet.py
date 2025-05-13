@@ -14,5 +14,6 @@ class Bullet(Projectile):
         self.loaded_image = load_image(config.IMAGEFILE_PATH + projectile_name + ".png")
         
         self.image = self.set_image(projectile_name)
+        self.mask = pygame.mask.from_surface(self.image)
         
         self.rect = self.image.get_rect(center = (x, y))

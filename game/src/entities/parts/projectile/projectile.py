@@ -12,8 +12,6 @@ class Projectile(pygame.sprite.Sprite):
 
     def update(self, dt):
         # Update the position of the shell based on its speed and direction
-        
-        
         self.rect.center = movement_vector(self.rect.centerx, self.rect.centery, self.direction, self.speed, dt)
 
         if self.rect.left > config.GAME_WINDOW_WIDTH or self.rect.right < 0 or self.rect.top > config.GAME_WINDOW_HEIGHT or self.rect.bottom < 0:

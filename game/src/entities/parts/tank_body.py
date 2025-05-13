@@ -24,6 +24,7 @@ class TankBody(pygame.sprite.Sprite):
         self.image = self.rotated_body_image
         # 3. Get the rect of the rotated image and position it
         self.rect = self.rotated_body_image.get_rect(center = (x, y))
+        self.mask = pygame.mask.from_surface(self.image)
         self.bullet_fired_pos_x = (self.image_files["tank_body"].get_width() / 2) - ((self.image_files["tank_body"].get_width() / 2) / 1.3)
         self.bullet_fired_pos_y = (self.image_files["tank_body"].get_height() / 2) - ((self.image_files["tank_body"].get_height() / 2) / 3)
 
@@ -38,6 +39,7 @@ class TankBody(pygame.sprite.Sprite):
         self.image = self.rotated_body_image
         # 3. Get the rect of the rotated image and position it
         self.rect = self.rotated_body_image.get_rect(center = current_center_pos)
+        self.mask = pygame.mask.from_surface(self.image)
 
     def rotate(self, angle_degrees):
         self.direction = self.direction.rotate(angle_degrees)

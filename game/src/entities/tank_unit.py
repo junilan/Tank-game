@@ -39,8 +39,9 @@ class TankUnit(Unit):
         self.turret = Turret(x, y, turret_image_files)
         self.tank_body_group = pygame.sprite.GroupSingle(self.tank_body)
         self.turret_group = pygame.sprite.GroupSingle(self.turret)
-        self.image = pygame.Surface((0, 0), pygame.SRCALPHA)
         self.rect = self.tank_body.rect
+        self.image = self.tank_body.image
+        self.mask = self.tank_body.mask
 
         self.rotaion_speed = STATUS["rotation_speed"]
         self.direction = pygame.math.Vector2(STATUS["init_direction"])

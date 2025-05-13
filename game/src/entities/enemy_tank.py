@@ -27,12 +27,13 @@ class EnemyTank(TankUnit):
         self.cooldown_cnt_bullet = 0
 
     def update(self, dt, player_x, player_y):
+        keys = pygame.key.get_pressed()
         
         if self.is_alive:
             aim_pos_x, aim_pos_y = player_x, player_y
             self.turret.rotate(aim_pos_x, aim_pos_y)
-
-            self.fire_shell()
+            if keys[pygame.K_SPACE]:
+                self.fire_shell()
             self.is_fired_shell, self.cooldown_cnt_shell = self.reloading(self.is_fired_shell, self.cooldown_cnt_shell, self.cannon_attack_speed, dt)
             #self.is_fired_bullet, self.cooldown_cnt_bullet = self.reloading(self.is_fired_bullet, self.cooldown_cnt_bullet, self.machine_gun_attack_speed, dt)
 
