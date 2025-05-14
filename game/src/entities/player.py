@@ -10,6 +10,17 @@ from .tank_unit import TankUnit
 from src.utils import load_image
 
 class Player(TankUnit):
+    '''
+    Player Tank class that inherits from TankUnit.
+
+    attributes:
+        tank_body (TankBody): The body of the tank.
+        turret (Turret): The turret of the tank.
+        shell_group (pygame.sprite.Group): Group for shells fired from the tank.
+        Bullet_group (pygame.sprite.Group): Group for bullets fired from the tank.
+        is_fired_shell (bool): Whether the shell has been fired or not.
+        is_fired_bullet (bool): Whether the bullet has been fired or not.
+    '''
     def __init__(self, x, y):
         super().__init__(x, y)
 

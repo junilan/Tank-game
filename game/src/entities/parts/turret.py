@@ -4,6 +4,20 @@ from src.entities.character_stats import PLAYERSTATUS
 from src.utils import calculate_angle_vec_to_degrees_rotate
 
 class Turret(pygame.sprite.Sprite):
+    '''
+    Turret class that represents the turret of a tank.
+
+    Attributes:
+        x (int): The x-coordinate of the turret.
+        y (int): The y-coordinate of the turret.
+        cannon_pos (float): The cannon position.
+        shell_fired_pos (float): The shell fired position.
+        original_image (pygame.Surface): The original image of the turret.
+        image (pygame.Surface): The current image of the turret.
+        rect (pygame.Rect): The rectangle representing the turret's position and size.
+        direction (pygame.math.Vector2): The direction vector of the turret.
+        angle (float): The angle of rotation of the turret.
+    '''
     def __init__(self, x, y, image_files):
         super().__init__()
         self.x = x
@@ -20,7 +34,7 @@ class Turret(pygame.sprite.Sprite):
         self.angle = 0
 
     def combine_images(self, image_files):
-
+        # Combine the turret images into one surface
         turret_body_image = image_files["turret_body"]
         cannon_cover_image = image_files["cannon_cover"]
         cannon_body_image = image_files["cannon_body"]
@@ -54,4 +68,5 @@ class Turret(pygame.sprite.Sprite):
         pygame.draw.circle(screen, (0, 255, 0), (self.x, self.y), 5, 0)
 
     def rotate(self, x, y):
+        # Rotate the turret towards the mouse position
         self.aim_pos_vector = pygame.Vector2(x, y)

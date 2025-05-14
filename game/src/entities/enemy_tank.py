@@ -10,6 +10,7 @@ from .tank_unit import TankUnit
 from src.utils import load_image
 
 class EnemyTank(TankUnit):
+    '''Enemy Tank class that inherits from TankUnit.'''
     def __init__(self, x, y):
         super().__init__(x, y)
 
@@ -27,6 +28,7 @@ class EnemyTank(TankUnit):
         self.cooldown_cnt_bullet = 0
 
     def update(self, dt, player_x, player_y):
+        '''Update the enemy tank's state.'''
         keys = pygame.key.get_pressed()
         
         if self.is_alive:

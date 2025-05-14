@@ -5,6 +5,18 @@ from src.utils import load_image
 from src.entities.character_stats import TANKSTATUS
 
 class Bullet(Projectile):
+    '''
+    Bullet class that represents a projectile fired from the tank's machine gun.
+
+    Attributes:
+        x (int): The x-coordinate of the bullet.
+        y (int): The y-coordinate of the bullet.
+        direction (pygame.math.Vector2): The direction of the bullet.
+        speed (float): The speed of the bullet.
+        image (pygame.Surface): The image representing the bullet.
+        mask (pygame.mask.Mask): The mask for collision detection.
+        rect (pygame.Rect): The rectangle representing the bullet's position and size.
+    '''
     def __init__(self, x, y, direction):
         super().__init__(x, y, direction)
         self.direction = direction

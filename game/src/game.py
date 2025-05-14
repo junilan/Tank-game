@@ -7,6 +7,9 @@ from src.entities import EnemyDummy
 from src.entities import EnemyTank
 
 class Game:
+    '''
+    Main game class that initializes the game, handles events, updates game state, and draws the game objects.
+    '''
     def __init__(self):
         pygame.init()
         self.screen = pygame.display.set_mode((config.GAME_WINDOW_WIDTH, config.GAME_WINDOW_HEIGHT))
@@ -54,6 +57,9 @@ class Game:
         self.enemy_dummy_group.update(self.dt)
         self.enemy_tank_group.update(self.dt, self.player.rect.centerx, self.player.rect.centery)
 
+        '''
+        Temporary collision detection and handling(will be organized this code later)
+        '''
         collisions_by_player = pygame.sprite.groupcollide(self.player_group, self.enemy_dummy_group, False, False)
         for players, enemies in collisions_by_player.items():
             for enemy in enemies:

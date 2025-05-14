@@ -6,6 +6,18 @@ from .parts import TankBody
 from .parts import Turret
 
 class TankUnit(Unit):
+    '''
+    Base class for all tank units in the game.
+
+    attributes:
+        tank_body (TankBody): The body of the tank.
+        turret (Turret): The turret of the tank.
+        shell_group (pygame.sprite.Group): Group for shells fired from the tank.
+        Bullet_group (pygame.sprite.Group): Group for bullets fired from the tank.
+        is_fired_shell (bool): Whether the shell has been fired or not.
+        is_fired_bullet (bool): Whether the bullet has been fired or not.
+
+    '''
     def __init__(self, x, y):
         super().__init__(x, y)
         
@@ -34,6 +46,7 @@ class TankUnit(Unit):
         pass
 
     def set_attributes(self, tank_body_image_file, turret_image_files, STATUS, x, y):
+        # Initialize the tank body and turret with the given images and status
 
         self.tank_body = TankBody(x, y, tank_body_image_file)
         self.turret = Turret(x, y, turret_image_files)
@@ -73,6 +86,7 @@ class TankUnit(Unit):
             self.Bullet_group.add(bullet)
 
     def reloading(self, is_fired, cooldown_cnt, cooldown_time, dt):
+        # Reloading logic for the tank unit
         if is_fired == True:
             cooldown_cnt += 1 * dt
             if cooldown_cnt >= cooldown_time: 
@@ -82,6 +96,7 @@ class TankUnit(Unit):
         return is_fired, cooldown_cnt
 
     def take_damage(self, damage):
+        # This method is called when the unit takes damage.
         self.health -= damage
         print(f"health: {self.health}")
         if self.health <= 0:
