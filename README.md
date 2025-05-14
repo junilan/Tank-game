@@ -7,3 +7,10 @@ Library: Pygame
 Tools: Github, MS Visual Studio
 
 #Project Structure
+game/
+├── assets/ # Images and other assets
+├── src/ 
+│ ├── game.py # Main game loop
+│ ├── utils/ # Shared functions
+│ └── entities/ # Units (Player, Enemy, Projectiles etc.)
+├── config.py # Game settings
